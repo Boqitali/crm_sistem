@@ -1,24 +1,28 @@
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { TeacherService } from "../../teacher/teacher.service";
 import { JwtService } from "@nestjs/jwt";
-import { AdminService } from "../../admin/admin.service";
-import { Admin } from "../../admin/entities/admin.entity";
+import { Teacher } from "../../teacher/entities/teacher.entity";
 import { LoginDto } from "../dto/login.dto";
-import * as bcrypt from "bcrypt"
+import * as bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 @Injectable()
-export class AdminAuthService {
+export class TeacherAuthSevice {
   constructor(
-    private readonly adminService: AdminService,
+    private readonly teracherService: TeacherService,
     private readonly jwtService: JwtService
   ) {}
 
-  async generateToken(admin: Admin) {
+  async generateToken(admin: Teacher) {
     const payload = {
       id: admin.id,
       adminname: admin.firstName,
       email: admin.email,
-      is_creator: admin.is_creator,
+      is_creator: admin.is_active,
     };
 
     const accessToken = this.jwtService.sign(payload, {
@@ -34,23 +38,25 @@ export class AdminAuthService {
     return { accessToken, refreshToken };
   }
 
-  async loginAdmin(loginAdminDto: LoginDto, res: Response) {
-    const admin = await this.adminService.findByEmail(loginAdminDto.email);
+  async loginTeacher(loginTeacherDto: LoginDto, res: Response) {
+    const teacher = await this.teracherService.findByEmail(
+      loginTeacherDto.email
+    );
 
-    if (!admin) {
+    if (!teacher) {
       throw new UnauthorizedException("email yoki parol xato");
     }
 
     const validPassword = await bcrypt.compare(
-      loginAdminDto.password,
-      admin.password
+      loginTeacherDto.password,
+      teacher.password
     );
 
     if (!validPassword) {
       throw new UnauthorizedException("email yoki parol xato");
     }
 
-    const tokens = await this.generateToken(admin);
+    const tokens = await this.generateToken(teacher);
 
     res.cookie("refresh-token", tokens.refreshToken, {
       httpOnly: true,
@@ -59,16 +65,16 @@ export class AdminAuthService {
 
     const hashed_refresh_token = await bcrypt.hash(tokens.refreshToken, 7);
 
-    admin.refresh_token = hashed_refresh_token;
-    await this.adminService.save(admin);
+    teacher.refresh_token = hashed_refresh_token;
+    await this.teracherService.save(teacher);
 
     return {
-      message: "admin logged successfully",
+      message: "teacher logged successfully",
       token: tokens.accessToken,
     };
   }
 
-  async logoutAdmin(req: Request, res: Response) {
+  async logoutTeacher(req: Request, res: Response) {
     const cookieRefreshToken = req.cookies["refresh-token"];
 
     if (!cookieRefreshToken) {
@@ -81,9 +87,9 @@ export class AdminAuthService {
       throw new UnauthorizedException("Refresh token xato");
     }
 
-    const admin = await this.adminService.findByEmail(payload.email);
+    const teacher = await this.teracherService.findByEmail(payload.email);
 
-    if (!admin) {
+    if (!teacher) {
       throw new BadRequestException(
         "Bunday refresh tokenli foydalanuvchi topilmadi"
       );
@@ -93,11 +99,11 @@ export class AdminAuthService {
       httpOnly: true,
     });
 
-    admin.refresh_token = "";
-    await this.adminService.save(admin);
+    teacher.refresh_token = "";
+    await this.teracherService.save(teacher);
 
     return {
-      message: "admin logged out",
+      message: "teacher logged out",
     };
   }
 
@@ -114,15 +120,15 @@ export class AdminAuthService {
       throw new UnauthorizedException("Refresh token xato");
     }
 
-    const admin = await this.adminService.findByEmail(payload.email);
+    const teacher = await this.teracherService.findByEmail(payload.email);
 
-    if (!admin) {
+    if (!teacher) {
       throw new BadRequestException(
         "Bunday refresh tokenli foydalanuvchi topilmadi"
       );
     }
 
-    const tokens = await this.generateToken(admin);
+    const tokens = await this.generateToken(teacher);
 
     res.cookie("refresh-token", tokens.refreshToken, {
       httpOnly: true,
@@ -131,8 +137,8 @@ export class AdminAuthService {
 
     const hashed_refresh_token = await bcrypt.hash(tokens.refreshToken, 7);
 
-    admin.refresh_token = hashed_refresh_token;
-    await this.adminService.save(admin);
+    teacher.refresh_token = hashed_refresh_token;
+    await this.teracherService.save(teacher);
 
     return {
       message: "Refresh token yangilandi",

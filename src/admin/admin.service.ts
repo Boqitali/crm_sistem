@@ -57,6 +57,7 @@ export class AdminService {
   remove(id: number) {
     return this.adminRepo.delete({ id });
   }
+  
   async save(admin: Admin) {
     return this.adminRepo.save(admin);
   }

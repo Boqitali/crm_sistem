@@ -1,5 +1,5 @@
-import { Body, Controller, HttpCode, Post, Res } from "@nestjs/common";
-import { Response } from "express";
+import { Body, Controller, Get, HttpCode, Post, Req, Res } from "@nestjs/common";
+import { Request, Response } from "express";
 import { AdminAuthService } from "./admin.auth.service";
 import { LoginDto } from "../dto/login.dto";
 
@@ -13,6 +13,22 @@ export class AdminAuthController {
     @Body() loginAdminDto: LoginDto,
     @Res({ passthrough: true }) res: Response
   ) {
-    return this.adminAuthService.loginAdmin(loginAdminDto, res );
+    return this.adminAuthService.loginAdmin(loginAdminDto, res);
+  }
+
+  @Get("logout")
+  async logoutAdmin(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    return this.adminAuthService.logoutAdmin(req, res);
+  }
+
+  @Post("refresh-token")
+  async refreshToken(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    return this.adminAuthService.refreshToken(req, res);
   }
 }

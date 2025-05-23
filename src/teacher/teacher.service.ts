@@ -61,4 +61,8 @@ export class TeacherService {
   remove(id: number) {
     return this.teacherRepo.delete({ id });
   }
+
+  async save(admin: Teacher) {
+    return this.teacherRepo.save(admin);
+  }
 }

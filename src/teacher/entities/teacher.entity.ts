@@ -43,4 +43,8 @@ export class Teacher {
   @Field()
   @Column()
   avatar_url: string;
+
+  @Field()
+  @Column({ default: "" })
+  refresh_token: string;
 }
