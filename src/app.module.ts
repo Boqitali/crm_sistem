@@ -6,6 +6,8 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { TeacherModule } from './teacher/teacher.module';
+import { StudentsModule } from './students/students.module';
+import { CoursesModule } from './courses/courses.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
@@ -35,6 +37,8 @@ import { TeacherModule } from './teacher/teacher.module';
     AuthModule,
     AdminModule,
     TeacherModule,
+    StudentsModule,
+    CoursesModule,
     
   ],
   controllers: [],

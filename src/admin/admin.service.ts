@@ -43,7 +43,7 @@ export class AdminService {
     const admin = await this.adminRepo.findOne({ where: { id } });
 
     if (!admin) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`Admin with ID ${id} not found`);
     }
 
     if (password) {
