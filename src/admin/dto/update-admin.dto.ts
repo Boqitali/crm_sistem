@@ -6,25 +6,30 @@ export class UpdateAdminDto {
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  firstName: string;
+  firstName?: string;
+  
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  lastName: string;
+  lastName?: string;
+
   @Field()
   //   @IsNotEmpty()
   //   @IsEmail()
-  email: string;
+  email?: string;
+
   @Field()
   //   @IsNotEmpty()
   //   @IsPhoneNumber("UZ")
-  phone: string;
+  phone?: string;
+
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  password: string;
+  password?: string;
+
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  confirm_password: string;
+  confirm_password?: string;
 }

@@ -1,51 +1,50 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateStudentDto } from "./create-student.dto";
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
 
-export class UpdateStudentDto extends PartialType(CreateStudentDto) {
+@InputType()
+export class UpdateStudentDto  {
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  firstName: string;
+  firstName?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  lastName: string;
+  lastName?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  email: string;
+  email?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  phone: string;
+  phone?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  password: string;
+  password?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  confirm_password: string;
+  confirm_password?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  gender: string;
+  gender?: string;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  date_of_borth: Date;
+  date_of_borth?: Date;
 
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
-  avatar_url: string;
+  avatar_url?: string;
 }

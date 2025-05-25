@@ -11,12 +11,12 @@ import { CoursesModule } from './courses/courses.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
-    // GraphQLModule.forRoot<ApolloDriverConfig>({
-    //   driver: ApolloDriver,
-    //   autoSchemaFile: "schema.gql",
-    //   sortSchema: true,
-    //   playground: true,
-    // }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: "schema.gql",
+      sortSchema: true,
+      playground: true,
+    }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

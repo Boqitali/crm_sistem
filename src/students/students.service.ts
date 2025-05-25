@@ -9,7 +9,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Student } from "./entities/student.entity";
 import { Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
-import { hash } from "crypto";
 
 @Injectable()
 export class StudentsService {
@@ -60,7 +59,7 @@ export class StudentsService {
     return this.studentRepo.delete({ id });
   }
 
-  async save(admin: Student) {
-    return this.studentRepo.save(admin);
+  async save(student: Student) {
+    return this.studentRepo.save(student);
   }
 }

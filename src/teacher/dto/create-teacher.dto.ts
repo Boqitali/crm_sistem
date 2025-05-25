@@ -1,6 +1,7 @@
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
 
+@InputType()
 export class CreateTeacherDto {
   @Field()
   //   @IsNotEmpty()

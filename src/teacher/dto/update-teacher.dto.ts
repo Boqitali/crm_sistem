@@ -1,9 +1,8 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateTeacherDto } from "./create-teacher.dto";
-import { Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from "class-validator";
 
-export class UpdateTeacherDto extends PartialType(CreateTeacherDto) {
+@InputType()
+export class UpdateTeacherDto {
   @Field()
   //   @IsNotEmpty()
   //   @IsString()
